@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Keep alarm resources even if a resource shrinker cannot see a reference. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@raw/alarm_tone,@drawable/ic_stat_alarm" />

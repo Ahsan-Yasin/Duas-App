@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Daily Duas</string>
+    <string name="channel_alarms">Dua alarms</string>
+    <string name="channel_alarms_desc">Rings at your reminder times, also over the lock screen</string>
+    <string name="channel_missed">Missed reminders</string>
+    <string name="channel_missed_desc">Shown when a dua alarm was not answered</string>
+    <string name="alarm_default_title">Time for your duas</string>
+    <string name="action_start">Start reciting</string>
+    <string name="action_snooze">Snooze %1$d min</string>
+    <string name="action_dismiss">Dismiss</string>
+    <string name="missed_title">Missed — %1$s</string>
+    <string name="missed_text">%1$s · Tap to start reciting</string>
+    <string name="placeholder_text">Preparing your alarm…</string>
+</resources>

@@ -1,0 +1,50 @@
+Tanzil Quran Text - licence and provenance for src/assets/quran/quran-simple.txt
+==============================================================================
+
+File:        quran-simple.txt (UTF-8, no BOM, LF line endings, "sura|aya|text" per line)
+Text type:   Tanzil "Simple" (Imla'ei script, full tashkeel) - Version 1.1
+Options:     pause marks = on, sajdah signs = on, tatweel below superscript alef = on,
+             rub-el-hizb signs = off (these are the defaults of the tanzil.net/download form)
+Downloaded:  2026-10-06 from
+             https://tanzil.net/pub/download/index.php?marks=true&sajdah=true&tatweel=true&quranType=simple&outType=txt-2&agree=true
+SHA-256:     c8c2ea9e004cf3f4b7afc5ba00de859556f4ed09bd9cf5d1bc79e877406ef678
+Size:        1,353,105 bytes (6236 verses, 114 suras)
+
+The file is a verbatim, unmodified copy. Its own copyright block (reproduced
+below exactly as it appears at the end of the file) must not be removed.
+
+Attribution shown in the app (About / Credits screen):
+  Quran text: Tanzil Project (Simple, v1.1), https://tanzil.net - used verbatim
+  under the Tanzil terms of use (Creative Commons Attribution 3.0; changing the text is not allowed).
+
+------------------------------------------------------------------------------
+Copyright block reproduced verbatim from the downloaded file:
+------------------------------------------------------------------------------
+# PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+#====================================================================
+#
+#  Tanzil Quran Text (Simple, Version 1.1)
+#  Copyright (C) 2007-2026 Tanzil Project
+#  License: Creative Commons Attribution 3.0
+#
+#  This copy of the Quran text is carefully produced, highly 
+#  verified and continuously monitored by a group of specialists 
+#  at Tanzil Project.
+#
+#  TERMS OF USE:
+#
+#  - Permission is granted to copy and distribute verbatim copies 
+#    of this text, but CHANGING IT IS NOT ALLOWED.
+#
+#  - This Quran text can be used in any website or application, 
+#    provided that its source (Tanzil Project) is clearly indicated, 
+#    and a link is made to tanzil.net to enable users to keep
+#    track of changes.
+#
+#  - This copyright notice shall be included in all verbatim copies 
+#    of the text, and shall be reproduced appropriately in all files 
+#    derived from or containing substantial portion of this text.
+#
+#  Please check updates at: http://tanzil.net/updates/
+#
+#====================================================================

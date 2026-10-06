@@ -1,0 +1,128 @@
+[
+  {
+    "key": "al_ikhlas",
+    "title": "Surah Al-Ikhlas",
+    "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+    "ayahs": [
+      "قُلْ هُوَ اللَّهُ أَحَدٌ",
+      "اللَّهُ الصَّمَدُ",
+      "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+      "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ"
+    ],
+    "transliteration": "Qul huwa Allahu ahad. Allahu s-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.",
+    "translation": "Say: He is Allah, the One. Allah, the Everlasting on whom all depend. He has no child, and He was not born of anyone. And nothing is comparable to Him.",
+    "source": "Quran 112:1-4",
+    "category": "Protection",
+    "default_repeat": 3,
+    "quran": {
+      "surah": 112,
+      "ayah_start": 1,
+      "ayah_end": 4
+    },
+    "verification_status": "verified",
+    "notes": "Arabic copied verbatim from the bundled Tanzil Quran Text (Simple, v1.1; options: pause marks, sajdah signs, tatweel before superscript alef) - src/assets/quran/quran-simple.txt. Tanzil prefixes 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ ' to ayah 1 of every sura except 1 and 9; that 4-word prefix was removed from ayah 1 here. English is an original plain-English rendering written for this app (not a published translation)."
+  },
+  {
+    "key": "al_falaq",
+    "title": "Surah Al-Falaq",
+    "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ مِن شَرِّ مَا خَلَقَ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+    "ayahs": [
+      "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
+      "مِن شَرِّ مَا خَلَقَ",
+      "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+      "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ",
+      "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ"
+    ],
+    "transliteration": "Qul a'udhu bi rabbil-falaq. Min sharri ma khalaq. Wa min sharri ghasiqin idha waqab. Wa min sharrin-naffathati fil-'uqad. Wa min sharri hasidin idha hasad.",
+    "translation": "Say: I seek protection with the Lord of the dawn, from the harm of everything He has created, from the harm of the night when its darkness spreads, from the harm of those who blow on knots (in sorcery), and from the harm of the envious one when he envies.",
+    "source": "Quran 113:1-5",
+    "category": "Protection",
+    "default_repeat": 3,
+    "quran": {
+      "surah": 113,
+      "ayah_start": 1,
+      "ayah_end": 5
+    },
+    "verification_status": "verified",
+    "notes": "Arabic copied verbatim from the bundled Tanzil Quran Text (Simple, v1.1; options: pause marks, sajdah signs, tatweel before superscript alef) - src/assets/quran/quran-simple.txt. Tanzil prefixes 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ ' to ayah 1 of every sura except 1 and 9; that 4-word prefix was removed from ayah 1 here. English is an original plain-English rendering written for this app (not a published translation)."
+  },
+  {
+    "key": "an_nas",
+    "title": "Surah An-Nas",
+    "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ مَلِكِ النَّاسِ إِلَـٰهِ النَّاسِ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ مِنَ الْجِنَّةِ وَالنَّاسِ",
+    "ayahs": [
+      "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
+      "مَلِكِ النَّاسِ",
+      "إِلَـٰهِ النَّاسِ",
+      "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ",
+      "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ",
+      "مِنَ الْجِنَّةِ وَالنَّاسِ"
+    ],
+    "transliteration": "Qul a'udhu bi rabbin-nas. Malikin-nas. Ilahin-nas. Min sharril-waswasil-khannas. Alladhi yuwaswisu fi sudurin-nas. Minal-jinnati wan-nas.",
+    "translation": "Say: I seek protection with the Lord of people, the Sovereign of people, the God of people, from the harm of the sneaking whisperer who slinks away, who whispers into the hearts of people, whether from among the jinn or from among people.",
+    "source": "Quran 114:1-6",
+    "category": "Protection",
+    "default_repeat": 3,
+    "quran": {
+      "surah": 114,
+      "ayah_start": 1,
+      "ayah_end": 6
+    },
+    "verification_status": "verified",
+    "notes": "Arabic copied verbatim from the bundled Tanzil Quran Text (Simple, v1.1; options: pause marks, sajdah signs, tatweel before superscript alef) - src/assets/quran/quran-simple.txt. Tanzil prefixes 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ ' to ayah 1 of every sura except 1 and 9; that 4-word prefix was removed from ayah 1 here. English is an original plain-English rendering written for this app (not a published translation)."
+  },
+  {
+    "key": "ayat_al_kursi",
+    "title": "Ayat al-Kursi",
+    "arabic": "اللَّهُ لَا إِلَـٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+    "ayahs": [
+      "اللَّهُ لَا إِلَـٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ"
+    ],
+    "transliteration": "Allahu la ilaha illa huwal-hayyul-qayyum. La ta'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa'u 'indahu illa bi-idhnih. Ya'lamu ma bayna aydihim wa ma khalfahum. Wa la yuhituna bi shay'im-min 'ilmihi illa bima sha'. Wasi'a kursiyyuhus-samawati wal-ard. Wa la ya'uduhu hifdhuhuma. Wa huwal-'aliyyul-'adhim.",
+    "translation": "Allah: there is no god but Him, the Ever-Living, the One who sustains all that exists. Neither slumber nor sleep takes hold of Him. Everything in the heavens and everything on the earth belongs to Him. Who could intercede with Him without His permission? He knows what lies ahead of people and what lies behind them, and they grasp nothing of His knowledge except what He wills. His Kursi (Footstool) spans the heavens and the earth, and guarding them never wearies Him. He is the Most High, the Supreme in greatness.",
+    "source": "Quran 2:255",
+    "category": "Protection",
+    "default_repeat": 1,
+    "quran": {
+      "surah": 2,
+      "ayah_start": 255,
+      "ayah_end": 255
+    },
+    "verification_status": "verified",
+    "notes": "Arabic copied verbatim from the bundled Tanzil Quran Text (Simple, v1.1; options: pause marks, sajdah signs, tatweel before superscript alef) - src/assets/quran/quran-simple.txt. English is an original plain-English rendering written for this app (not a published translation)."
+  },
+  {
+    "key": "kalimat_tammah",
+    "title": "Refuge in Allah's perfect words (evil eye)",
+    "arabic": "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ، وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ",
+    "ayahs": null,
+    "transliteration": "A'udhu bi kalimatillahi t-tammati min kulli shaytanin wa hammatin, wa min kulli 'aynin lammah.",
+    "translation": "I seek protection in the perfect words of Allah from every devil and every venomous creature, and from every harmful, envious eye.",
+    "source": "Sahih al-Bukhari 3371",
+    "category": "Evil eye",
+    "default_repeat": 3,
+    "quran": null,
+    "verification_status": "unverified",
+    "notes": "Arabic taken programmatically from Sahih al-Bukhari 3371 (Book of the Prophets; in-book 60/45) as published in the sunnah.com-derived fawazahmed0/hadith-api dataset, and cross-checked letter-for-letter against https://en.tohed.com/hadith/bukhari/3371 (sunnah.com itself blocks scripted access). In Bukhari 3371 Ibn Abbas reports that the Prophet (peace be upon him) used to seek refuge for al-Hasan and al-Husayn and said: 'Your father (Ibrahim) used to seek refuge with it for Isma'il and Ishaq', followed by this first-person wording (أَعُوذُ), so this text is the Bukhari wording itself, not an adaptation. The second-person form the Prophet used for the two boys is reported in Sunan Abi Dawud 4737 and Jami' at-Tirmidhi 2060: \"أُعِيذُكُمَا بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ\" (U'idhukuma ...). Ibn Majah 3525 also has the first-person أَعُوذُ form. Encoding changes from the source: RLM marks and quotation marks removed; 'لاَمَّةٍ' (fatha typed after the alef) re-encoded as 'لَامَّةٍ' (fatha on the lam), same reading. The hadith gives no repetition count; 3 is the user's routine choice. English is an original rendering written for this app. Unverified until the user confirms."
+  },
+  {
+    "key": "acceptance",
+    "title": "Dua for acceptance",
+    "arabic": "رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ",
+    "ayahs": [
+      "رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ"
+    ],
+    "transliteration": "Rabbana taqabbal minna, innaka antas-Sami'ul-'Alim.",
+    "translation": "Our Lord, accept this from us. Truly, You alone are the All-Hearing, the All-Knowing.",
+    "source": "Quran 2:127 (partial)",
+    "category": "Acceptance",
+    "default_repeat": 1,
+    "quran": {
+      "surah": 2,
+      "ayah_start": 127,
+      "ayah_end": 127
+    },
+    "verification_status": "verified",
+    "notes": "partial ayah: the closing supplication of 2:127 (spoken by Ibrahim and Isma'il while raising the foundations of the House), copied as an exact substring of the Tanzil 2:127 text, including the Tanzil pause mark U+06D6 after مِنَّا. ayahs[0] is a substring of the verse, not the whole verse. English is an original plain-English rendering written for this app (not a published translation)."
+  }
+]

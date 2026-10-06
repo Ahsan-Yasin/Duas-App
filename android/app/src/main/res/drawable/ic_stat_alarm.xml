@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Monochrome status-bar icon: crescent with a small star (original artwork). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFFFFFFF">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M9.807,5.089A8,8 0,1 0,18.911 14.193A6.5,6.5 0,0 1,9.807 5.089Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M17.6,3.4L18.129,4.872L19.692,4.92L18.456,5.878L18.893,7.38L17.6,6.5L16.307,7.38L16.744,5.878L15.508,4.92L17.071,4.872Z" />
+</vector>

@@ -1,0 +1,42 @@
+[
+  {
+    "key": "morning",
+    "name": "Morning",
+    "items": [
+      {
+        "dua_key": "ayat_al_kursi",
+        "repeat": 1
+      },
+      {
+        "dua_key": "al_ikhlas",
+        "repeat": 3
+      },
+      {
+        "dua_key": "al_falaq",
+        "repeat": 3
+      },
+      {
+        "dua_key": "an_nas",
+        "repeat": 3
+      }
+    ]
+  },
+  {
+    "key": "evil_eye",
+    "name": "Evil eye protection",
+    "items": [
+      {
+        "dua_key": "kalimat_tammah",
+        "repeat": 3
+      },
+      {
+        "dua_key": "al_falaq",
+        "repeat": 3
+      },
+      {
+        "dua_key": "an_nas",
+        "repeat": 3
+      }
+    ]
+  }
+]
