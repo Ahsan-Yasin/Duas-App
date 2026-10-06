@@ -272,7 +272,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       final msg = await ref.read(llmClientProvider).testConnection();
       result = (true, msg.trim().isEmpty ? 'Connected.' : msg);
     } on LlmException catch (e) {
-      result = (false, e.userMessage);
+      result = (false, e.fullMessage);
     } catch (e) {
       result = (false, 'Connection failed: $e');
     }
@@ -913,7 +913,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     : theme.colorScheme.error,
               ),
               const SizedBox(width: 8),
-              Expanded(child: Text(_testResult!.$2)),
+              Expanded(child: SelectableText(_testResult!.$2)),
             ],
           ),
         ),

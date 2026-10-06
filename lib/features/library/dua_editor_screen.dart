@@ -503,7 +503,7 @@ class _DuaEditorScreenState extends ConsumerState<DuaEditorScreen> {
       if (!mounted) return;
       setState(() => _translated = text);
     } on LlmException catch (e) {
-      if (mounted) setState(() => _translateError = e.userMessage);
+      if (mounted) setState(() => _translateError = e.fullMessage);
     } catch (_) {
       if (mounted) {
         setState(() => _translateError =
@@ -945,7 +945,7 @@ class _DuaEditorScreenState extends ConsumerState<DuaEditorScreen> {
           if (_translateError != null)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Text(
+              child: SelectableText(
                 _translateError!,
                 style: TextStyle(color: theme.colorScheme.error),
               ),

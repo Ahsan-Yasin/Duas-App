@@ -49,6 +49,7 @@ LlmClient _client(http.Client mock, {AppSettings? settings, Duration? timeout}) 
       settings: () => settings ?? const AppSettings(geminiApiKey: _key),
       client: mock,
       timeout: timeout ?? const Duration(seconds: 60),
+      retryDelay: Duration.zero,
     );
 
 Future<LlmException> _expectLlmError(Future<Object?> f) async {
@@ -167,6 +168,31 @@ void main() {
           }, 400))).suggestDuas('x', const []));
       expect(e400.kind, 'server');
       expect(e400.userMessage, contains('***'));
+    });
+
+    test('503 high demand retries, then falls back to the lite model', () async {
+      final calls = <String>[];
+      final client = _client(MockClient((req) async {
+        calls.add(req.url.path);
+        if (req.url.path.contains('gemini-flash-lite-latest')) {
+          return _json({
+            'candidates': [
+              {
+                'content': {
+                  'parts': [
+                    {'text': 'OK'},
+                  ],
+                },
+              },
+            ],
+          }, 200);
+        }
+        return http.Response('{"error":{"code":503,"status":"UNAVAILABLE"}}', 503);
+      }));
+      expect(await client.testConnection(), contains('Gemini'));
+      expect(calls, hasLength(3));
+      expect(calls.first, contains('gemini-flash-latest'));
+      expect(calls.last, contains('gemini-flash-lite-latest'));
     });
 
     test('network failure -> offline, slow -> timeout', () async {

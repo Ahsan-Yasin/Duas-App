@@ -75,9 +75,11 @@ String? _errorKindOf(ChatMessage m) {
 
 String _friendlyError(LlmException e) {
   if (e.kind == 'offline') {
-    return 'You seem to be offline. Asking for a dua needs an internet connection — your library, routines and reminders still work offline.';
+    final base =
+        'You seem to be offline. Asking for a dua needs an internet connection — your library, routines and reminders still work offline.';
+    return e.details.isEmpty ? base : '$base\n\nDetails:\n${e.details}';
   }
-  return e.userMessage;
+  return e.fullMessage;
 }
 
 /// Quran reference to store for a suggestion: the claimed one, else where the
@@ -661,7 +663,7 @@ class _ErrorBubble extends StatelessWidget {
               Icon(Icons.error_outline, color: scheme.onErrorContainer),
               const SizedBox(width: 8),
               Expanded(
-                child: Text(text,
+                child: SelectableText(text,
                     style: TextStyle(color: scheme.onErrorContainer)),
               ),
             ],

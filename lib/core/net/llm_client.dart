@@ -102,13 +102,25 @@ class ChatReply {
 }
 
 class LlmException implements Exception {
-  const LlmException(this.kind, this.userMessage);
+  const LlmException(this.kind, this.userMessage, {this.details = ''});
 
   /// offline | bad_key | denied | rate_limit | server | bad_json | no_key | timeout
   final String kind;
 
   /// Friendly text to show in the UI (never contains the API key).
   final String userMessage;
+
+  /// Technical details for debugging: provider, model, HTTP status, the
+  /// provider's own error message, which key was used (masked) and the
+  /// attempts made. Never contains the full API key.
+  final String details;
+
+  /// [userMessage] followed by [details], for showing the exact error.
+  String get fullMessage =>
+      details.isEmpty ? userMessage : '$userMessage\n\nDetails:\n$details';
+
+  LlmException withDetails(String extra) => LlmException(kind, userMessage,
+      details: [extra, details].where((s) => s.isNotEmpty).join('\n'));
 
   @override
   String toString() => 'LlmException($kind): $userMessage';
@@ -212,11 +224,18 @@ class LlmClient {
     required this._settings,
     http.Client? client,
     this.timeout = const Duration(seconds: 60),
+    this.retryDelay = const Duration(milliseconds: 1500),
   }) : _client = client ?? http.Client();
 
   final AppSettings Function() _settings;
   final http.Client _client;
   final Duration timeout;
+
+  /// Pause before retrying a Gemini call that failed with a transient status.
+  final Duration retryDelay;
+
+  static const _geminiFallbackModel = 'gemini-flash-lite-latest';
+  static const _transientStatus = {429, 500, 502, 503, 504};
 
   /// Asks the configured provider for duas matching [userText].
   /// [history] is the stored chat; the last 10 user/assistant messages are
@@ -313,15 +332,30 @@ class LlmClient {
         throw const LlmException('no_key',
             'Add your Anthropic API key in Settings to use the assistant.');
       }
-      return _anthropicCall(s, key, system, turns, maxTokens: maxTokens);
+      try {
+        return await _anthropicCall(s, key, system, turns, maxTokens: maxTokens);
+      } on LlmException catch (e) {
+        throw e.withDetails('Provider: Anthropic\nModel: ${s.anthropicModel}\nKey: ${_keyHint(key)}');
+      }
     }
     final key = s.effectiveGeminiKey.trim();
     if (key.isEmpty) {
       throw const LlmException(
           'no_key', 'Add a Gemini API key in Settings to use the assistant.');
     }
-    return _geminiCall(s, key, system, turns, json: json);
+    try {
+      return await _geminiCall(s, key, system, turns, json: json);
+    } on LlmException catch (e) {
+      final source = s.geminiApiKey.trim().isEmpty ? 'built-in' : 'entered in Settings';
+      throw e.withDetails(
+          'Provider: Google Gemini\nModel: ${s.geminiModel}\nKey: ${_keyHint(key)} ($source)');
+    }
   }
+
+  /// First 6 and last 4 characters of a key, enough to tell keys apart.
+  static String _keyHint(String key) => key.length <= 12
+      ? '***'
+      : '${key.substring(0, 6)}…${key.substring(key.length - 4)}';
 
   Future<String> _geminiCall(
     AppSettings s,
@@ -330,9 +364,7 @@ class LlmClient {
     List<(String, String)> turns, {
     required bool json,
   }) async {
-    final model = s.geminiModel.trim().isEmpty ? 'gemini-flash-latest' : s.geminiModel.trim();
-    final uri = Uri.https('generativelanguage.googleapis.com',
-        '/v1beta/models/${Uri.encodeComponent(model)}:generateContent');
+    final primary = s.geminiModel.trim().isEmpty ? 'gemini-flash-latest' : s.geminiModel.trim();
     final body = {
       'systemInstruction': {
         'parts': [
@@ -354,22 +386,42 @@ class LlmClient {
         if (json) 'responseSchema': _geminiSchema,
       },
     };
-    final res = await _post(uri, {
-      'Content-Type': 'application/json; charset=utf-8',
-      'x-goog-api-key': key,
-    }, body, key);
+    // Gemini often answers 503 "high demand" (or 429/5xx) for a few seconds:
+    // retry the chosen model once, then fall back to the lighter model.
+    final attempts = [
+      primary,
+      primary,
+      if (primary != _geminiFallbackModel) _geminiFallbackModel,
+    ];
+    late http.Response res;
+    var model = primary;
+    final tried = <String>[];
+    for (var i = 0; i < attempts.length; i++) {
+      if (i > 0) await Future<void>.delayed(retryDelay);
+      model = attempts[i];
+      final uri = Uri.https('generativelanguage.googleapis.com',
+          '/v1beta/models/${Uri.encodeComponent(model)}:generateContent');
+      res = await _post(uri, {
+        'Content-Type': 'application/json; charset=utf-8',
+        'x-goog-api-key': key,
+      }, body, key);
+      tried.add('$model → HTTP ${res.statusCode}');
+      if (!_transientStatus.contains(res.statusCode)) break;
+    }
     if (res.statusCode != 200) {
-      throw _geminiError(res, key, model);
+      throw _geminiError(res, key, model).withDetails('Attempts: ${tried.join(', ')}');
     }
     final decoded = _decodeBody(res);
     final blockReason = (decoded['promptFeedback'] as Map?)?['blockReason'];
     final candidates = decoded['candidates'];
     if (candidates is! List || candidates.isEmpty) {
       if (blockReason != null) {
-        throw const LlmException('server',
-            'The AI declined this request (safety filter). Try rephrasing it.');
+        throw LlmException('server',
+            'The AI declined this request (safety filter). Try rephrasing it.',
+            details: 'Model: $model\nblockReason: $blockReason');
       }
-      throw const LlmException('bad_json', 'The AI sent an empty answer. Please try again.');
+      throw LlmException('bad_json', 'The AI sent an empty answer. Please try again.',
+          details: 'Model: $model\nNo candidates. Body: ${_snippet(res, key)}');
     }
     final first = candidates.first as Map;
     final parts = (first['content'] as Map?)?['parts'];
@@ -384,10 +436,12 @@ class LlmClient {
     if (text.isEmpty) {
       final reason = first['finishReason'];
       if (reason == 'SAFETY' || reason == 'PROHIBITED_CONTENT' || reason == 'BLOCKLIST') {
-        throw const LlmException('server',
-            'The AI declined this request (safety filter). Try rephrasing it.');
+        throw LlmException('server',
+            'The AI declined this request (safety filter). Try rephrasing it.',
+            details: 'Model: $model\nfinishReason: $reason');
       }
-      throw const LlmException('bad_json', 'The AI sent an empty answer. Please try again.');
+      throw LlmException('bad_json', 'The AI sent an empty answer. Please try again.',
+          details: 'Model: $model\nfinishReason: $reason\nBody: ${_snippet(res, key)}');
     }
     return text.toString();
   }
@@ -462,21 +516,23 @@ class LlmClient {
           .post(uri, headers: headers, body: jsonEncode(body))
           .timeout(timeout);
     } on TimeoutException {
-      throw const LlmException(
-          'timeout', 'The AI took too long to answer. Check your connection and try again.');
-    } on SocketException {
-      throw _offline;
-    } on HandshakeException {
-      throw _offline;
-    } on HttpException {
-      throw _offline;
+      throw LlmException(
+          'timeout', 'The AI took too long to answer. Check your connection and try again.',
+          details: 'No response from ${uri.host} within ${timeout.inSeconds} s');
+    } on SocketException catch (e) {
+      throw _offline.withDetails('SocketException: ${_redact(e.toString(), key)}');
+    } on HandshakeException catch (e) {
+      throw _offline.withDetails('HandshakeException (TLS): ${_redact(e.toString(), key)}');
+    } on HttpException catch (e) {
+      throw _offline.withDetails('HttpException: ${_redact(e.toString(), key)}');
     } on http.ClientException catch (e) {
       final msg = _redact(e.message, key);
       if (msg.toLowerCase().contains('timed out')) {
-        throw const LlmException(
-            'timeout', 'The AI took too long to answer. Check your connection and try again.');
+        throw LlmException(
+            'timeout', 'The AI took too long to answer. Check your connection and try again.',
+            details: 'ClientException: $msg');
       }
-      throw _offline;
+      throw _offline.withDetails('ClientException: $msg');
     }
   }
 
@@ -490,7 +546,26 @@ class LlmClient {
     } on FormatException {
       // fall through
     }
-    throw const LlmException('bad_json', "The AI service sent a response the app couldn't read.");
+    throw LlmException('bad_json', "The AI service sent a response the app couldn't read.",
+        details: 'HTTP ${res.statusCode}, body: ${_snippet(res, '')}');
+  }
+
+  /// First 300 characters of the response body, with the key masked.
+  static String _snippet(http.Response res, String key) {
+    final text = _redact(utf8.decode(res.bodyBytes, allowMalformed: true), key)
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    return text.length > 300 ? '${text.substring(0, 300)}…' : text;
+  }
+
+  /// HTTP status plus the provider's own error status, reason and message.
+  static String _httpDetails(http.Response res, String key) {
+    final info = _errorInfo(res, key);
+    return [
+      'HTTP ${res.statusCode}${info.status.isEmpty ? '' : ' ${info.status}'}',
+      if (info.reason.isNotEmpty) 'Reason: ${info.reason}',
+      if (info.message.isNotEmpty) 'Message: ${info.message}' else 'Body: ${_snippet(res, key)}',
+    ].join('\n');
   }
 
   static ({String status, String message, String reason}) _errorInfo(
@@ -513,11 +588,14 @@ class LlmClient {
       // non-JSON error body
     }
     message = _redact(message, key);
-    if (message.length > 200) message = '${message.substring(0, 200)}…';
+    if (message.length > 600) message = '${message.substring(0, 600)}…';
     return (status: status, message: message, reason: reason);
   }
 
-  static LlmException _geminiError(http.Response res, String key, String model) {
+  static LlmException _geminiError(http.Response res, String key, String model) =>
+      _geminiErrorBase(res, key, model).withDetails(_httpDetails(res, key));
+
+  static LlmException _geminiErrorBase(http.Response res, String key, String model) {
     final info = _errorInfo(res, key);
     final code = res.statusCode;
     final keyProblem = info.reason == 'API_KEY_INVALID' ||
@@ -548,7 +626,10 @@ class LlmClient {
         'The Gemini service returned an error ($code)${info.message.isEmpty ? '' : ': ${info.message}'}');
   }
 
-  static LlmException _anthropicError(http.Response res, String key, String model) {
+  static LlmException _anthropicError(http.Response res, String key, String model) =>
+      _anthropicErrorBase(res, key, model).withDetails(_httpDetails(res, key));
+
+  static LlmException _anthropicErrorBase(http.Response res, String key, String model) {
     final info = _errorInfo(res, key);
     final code = res.statusCode;
     if (code == 401 || info.status == 'authentication_error') {

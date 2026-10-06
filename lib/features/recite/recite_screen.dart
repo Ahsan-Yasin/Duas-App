@@ -486,7 +486,28 @@ class _ReciteScreenState extends ConsumerState<ReciteScreen> {
         _translations[id] = text;
       });
     } on LlmException catch (e) {
-      messenger.showSnackBar(SnackBar(content: Text(e.userMessage)));
+      messenger.showSnackBar(SnackBar(
+        content: Text(e.userMessage),
+        action: e.details.isEmpty
+            ? null
+            : SnackBarAction(
+                label: 'Details',
+                onPressed: () {
+                  if (!mounted) return;
+                  showDialog<void>(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Error details'),
+                      content: SingleChildScrollView(child: SelectableText(e.fullMessage)),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(ctx), child: const Text('Close')),
+                      ],
+                    ),
+                  );
+                },
+              ),
+      ));
     } catch (e) {
       debugPrint('Translate failed: $e');
       messenger.showSnackBar(
